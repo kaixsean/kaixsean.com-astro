@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Container from "@/components/container.astro";
+import Giscus from "@/components/giscus.astro";
 import Label from "@/components/ui/label.astro";
 import YouTube from "@/components/mdx/YouTube.astro";
 import { authors } from "@/data/authors";
@@ -120,6 +121,8 @@ const isExternalAuthorImage = typeof author?.image === "string";
             ))
           }
         </div>
+
+        <Giscus />
       </div>
 
       <div class="flex justify-center mt-7 mb-7">
