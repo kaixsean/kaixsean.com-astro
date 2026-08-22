@@ -18,6 +18,10 @@ module.exports = {
         "2/3": "2 / 3",
         "9/16": "9 / 16",
       },
+      zIndex: {
+        60: "60",
+        70: "70",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

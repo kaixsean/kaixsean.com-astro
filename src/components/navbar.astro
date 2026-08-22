@@ -1,135 +1,191 @@
 ---
-import Container from "@/components/container.astro";
-import logoImage from "@/assets/logo.svg";
-import darkLogo from "@/assets/logo-dark.svg";
-import { Image } from "astro:assets";
-
-interface Menu {
-  label: string;
+interface NavLink {
   href: string;
+  title: string;
   external?: boolean;
-  badge?: string;
 }
-const leftmenu: Menu[] = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "About",
-    href: "/about",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-  },
+
+const navLinks: NavLink[] = [
+  { href: "/", title: "Home" },
+  { href: "/blog", title: "Posts" },
+  { href: "/tags", title: "Tags" },
+  { href: "/tags/travel", title: "Travels" },
+  { href: "https://buymeacoffee.com/kaixdev", title: "Support", external: true },
+  { href: "/about", title: "About" },
 ];
 
-const rightmenu: Menu[] = [
-  {
-    label: "Archive",
-    href: "/archive",
-  },
-  {
-    label: "Github",
-    href: "https://github.com/web3templates/stablo-astro",
-    external: true,
-    badge: "new",
-  },
-  {
-    label: "Download",
-    href: "https://web3templates.com/templates/stablo-minimal-blog-website-template",
-    external: true,
-  },
-];
-
-const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
+const desktopLinks = navLinks.filter((link) => link.href !== "/");
 ---
 
-<Container>
-  <nav>
-    <div class="flex flex-wrap justify-between md:gap-10 md:flex-nowrap">
-      <div
-        class="flex-col items-center justify-start order-1 hidden w-full md:flex md:flex-row md:justify-end md:w-auto md:order-none md:flex-1">
+<header
+  class="sticky top-0 z-50 border-b border-gray-950/10 bg-white/70 py-3 backdrop-blur-sm transition-colors dark:border-gray-50/[0.06] dark:bg-gray-950/60">
+  <div class="mx-auto max-w-full px-4 sm:px-6 md:max-w-3xl lg:max-w-5xl">
+    <div class="flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="/" aria-label="Kaixsean home">
+        <img
+          src="/logo.svg"
+          alt="Kaixsean"
+          width="102"
+          height="40"
+        />
+      </a>
+
+      <!-- Desktop nav + controls -->
+      <div class="flex items-center space-x-4 leading-5 sm:space-x-6">
         {
-          leftmenu.map((item) => (
+          desktopLinks.map((link) => (
             <a
-              href={item.href}
-              class="px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500">
-              {item.label}
+              href={link.href}
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              class="hidden font-medium text-gray-600 transition duration-300 ease-in-out hover:text-sky-600 sm:block dark:text-gray-100 dark:hover:text-sky-400">
+              {link.title}
             </a>
           ))
         }
-      </div>
 
-      <div class="flex items-center justify-between w-full md:w-auto">
-        <a class="w-28 dark:hidden" href="/">
-          <Image src={logoImage} alt="Logo" />
-        </a>
-
-        <a class="hidden w-28 dark:block" href="/">
-          <Image src={darkLogo} alt="Logo" />
-        </a>
-
+        <!-- Theme toggle button -->
         <button
-          id="menu"
-          aria-label="Toggle Menu"
-          class="px-2 py-1 ml-auto text-gray-500 rounded-md md:hidden focus:text-blue-500 focus:outline-none dark:text-gray-300">
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+          class="flex items-center justify-center text-gray-600 transition hover:text-sky-600 dark:text-gray-300 dark:hover:text-sky-400">
+          <!-- Sun icon (shown in dark mode) -->
           <svg
-            class="w-6 h-6 fill-current"
+            id="icon-sun"
+            class="hidden h-5 w-5 dark:block"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24">
-            <path
-              class="navmenu-toggle"
-              fill-rule="evenodd"
-              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-            ></path>
-
-            <path
-              class="navmenu-toggle hidden"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
-            ></path>
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon icon (shown in light mode) -->
+          <svg
+            id="icon-moon"
+            class="block h-5 w-5 dark:hidden"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
-      </div><div
-        class="flex-col items-center justify-start order-2 hidden w-full md:flex md:flex-row md:w-auto md:flex-1 md:order-none">
-        {
-          rightmenu.map((item) => (
-            <a
-              href={item.href}
-              class="px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500">
-              {item.label}
-            </a>
-          ))
-        }
+
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-btn"
+          aria-label="Toggle menu"
+          class="flex items-center justify-center text-gray-900 sm:hidden dark:text-gray-100">
+          <svg
+            id="icon-hamburger"
+            class="h-8 w-8"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor">
+            <path
+              fill-rule="evenodd"
+              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
       </div>
     </div>
-    <div class="navmenu-toggle hidden">
-      <div
-        class="flex flex-col items-center justify-start order-2 w-full md:hidden">
-        {
-          mobilemenu.map((item, index) => (
-            <a
-              href={item.href}
-              class="px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500"
-              target={item.external ? "_blank" : ""}
-              rel={item.external ? "noopener" : ""}>
-              {item.label}
-            </a>
-          ))
-        }
-      </div>
-    </div>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div
+  id="mobile-overlay"
+  class="fixed inset-0 z-60 bg-black/25 opacity-0 transition-opacity duration-300 pointer-events-none">
+</div>
+
+<!-- Mobile menu drawer (slides in from right) -->
+<div
+  id="mobile-drawer"
+  class="fixed top-0 right-0 z-70 h-full w-full translate-x-full bg-white/95 opacity-0 transition-all duration-300 ease-in-out dark:bg-gray-950/98">
+
+  <!-- Close button -->
+  <button
+    id="mobile-close-btn"
+    aria-label="Close menu"
+    class="absolute top-7 right-4 h-16 w-16 p-4 text-gray-900 hover:text-sky-600 dark:text-gray-100 dark:hover:text-sky-400">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+      <path
+        fill-rule="evenodd"
+        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+        clip-rule="evenodd"></path>
+    </svg>
+  </button>
+
+  <!-- Mobile nav links -->
+  <nav class="mt-8 flex h-full flex-col items-start overflow-y-auto pt-2 pl-12">
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          target={link.external ? "_blank" : undefined}
+          rel={link.external ? "noopener noreferrer" : undefined}
+          class="mobile-nav-link mb-4 py-2 pr-4 text-2xl font-bold tracking-widest text-gray-900 hover:text-sky-600 dark:text-gray-100 dark:hover:text-sky-400">
+          {link.title}
+        </a>
+      ))
+    }
   </nav>
-</Container>
+</div>
 
 <script is:inline>
-  const menuButton = document.getElementById("menu");
-  menuButton.addEventListener("click", () => {
-    [...document.querySelectorAll(".navmenu-toggle")].forEach((Element) => {
-      Element.classList.toggle("hidden");
-    });
+  // ─── Theme toggle ───────────────────────────────────────────────────────────
+  // Initial theme is already applied by the blocking script in <head>.
+  // This script only handles the toggle button interaction.
+  const themeBtn = document.getElementById("theme-toggle");
+
+  themeBtn.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    document.documentElement.classList.toggle("dark", !isDark);
+    localStorage.setItem("theme", isDark ? "light" : "dark");
   });
+
+  // ─── Mobile menu ────────────────────────────────────────────────────────────
+  const openBtn = document.getElementById("mobile-menu-btn");
+  const closeBtn = document.getElementById("mobile-close-btn");
+  const overlay = document.getElementById("mobile-overlay");
+  const drawer = document.getElementById("mobile-drawer");
+  const mobileLinks = document.querySelectorAll(".mobile-nav-link");
+
+  function openMenu() {
+    overlay.classList.remove("opacity-0", "pointer-events-none");
+    overlay.classList.add("opacity-100");
+    drawer.classList.remove("translate-x-full", "opacity-0");
+    drawer.classList.add("translate-x-0", "opacity-100");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    overlay.classList.remove("opacity-100");
+    overlay.classList.add("opacity-0", "pointer-events-none");
+    drawer.classList.remove("translate-x-0", "opacity-100");
+    drawer.classList.add("translate-x-full", "opacity-0");
+    document.body.style.overflow = "";
+  }
+
+  openBtn.addEventListener("click", openMenu);
+  closeBtn.addEventListener("click", closeMenu);
+  overlay.addEventListener("click", closeMenu);
+  mobileLinks.forEach((link) => link.addEventListener("click", closeMenu));
 </script>
