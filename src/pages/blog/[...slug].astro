@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import Authorcard from "@/components/authorcard.astro";
 import Container from "@/components/container.astro";
 import Label from "@/components/ui/label.astro";
 import YouTube from "@/components/mdx/YouTube.astro";
@@ -130,7 +129,6 @@ const isExternalAuthorImage = typeof author?.image === "string";
           ← View all posts
         </a>
       </div>
-      {author && <Authorcard author={author} />}
     </article>
   </Container>
 </Layout>
