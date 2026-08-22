@@ -103,6 +103,12 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 TailwindCSS is already configured in this repo, so you can start using them without any installation.
 
+## Deploy on Cloudflare Pages
+
+Set the `NODE_VERSION` environment variable to `24` in the Cloudflare Pages build settings. This project requires Node.js 22.19.0 or later.
+
+Use `pnpm install --frozen-lockfile` as the install command and `pnpm build` as the build command.
+
 ## 👀 Want to learn more?
 
 Feel free to check out [Astro Docs](https://docs.astro.build) or jump into our [Discord Chat](https://web3templates.com/discord).
