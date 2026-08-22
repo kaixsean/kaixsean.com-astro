@@ -11,6 +11,8 @@ services:
       - .:/app
       # Prevent host node_modules from overriding container's
       - /app/node_modules
+      # Isolate .astro cache to avoid stale dev server lock files
+      - /app/.astro
     environment:
       - NODE_ENV=development
     stdin_open: true

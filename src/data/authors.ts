@@ -1,17 +1,24 @@
 import marioImage from "../assets/authors/mario.webp";
 import joshuaImage from "../assets/authors/joshua.webp";
 import erikaImage from "../assets/authors/erika.webp";
+import type { ImageMetadata } from "astro";
 
 export interface Props {
   name: string;
   slug: string;
-  image: string;
+  image: string | ImageMetadata;
   bio: string;
 }
 
 export type Author = Props;
 
 export const authors: Props[] = [
+  {
+    name: "Kaixsean",
+    slug: "kaixsean",
+    image: "https://img.kaixsean.com/profile.jpg",
+    bio: "Kaixsean 是一位軟體工程師，喜歡旅遊、攝影與閱讀，也持續在個人部落格記錄生活與學習。",
+  },
   {
     name: "Mario Sanchez",
     slug: "mario-sanchez",

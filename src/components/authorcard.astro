@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 
 const { author } = Astro.props;
+const isExternalImage = typeof author.image === "string";
 ---
 
 <div
@@ -10,14 +11,25 @@ const { author } = Astro.props;
     <div class="relative flex-shrink-0 mt-1">
       {
         author.image && (
-          <Image
-            src={author.image}
-            alt="Author Photo"
-            width="96"
-            height="96"
-            loading="eager"
-            class="rounded-full object-cover w-24 h-24"
-          />
+          isExternalImage ? (
+            <img
+              src={author.image as string}
+              alt="Author Photo"
+              width="96"
+              height="96"
+              loading="eager"
+              class="rounded-full object-cover w-24 h-24"
+            />
+          ) : (
+            <Image
+              src={author.image}
+              alt="Author Photo"
+              width={96}
+              height={96}
+              loading="eager"
+              class="rounded-full object-cover w-24 h-24"
+            />
+          )
         )
       }
     </div>

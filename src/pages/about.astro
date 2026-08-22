@@ -21,9 +21,8 @@ import Link from "@/components/ui/link.astro";
         authors.slice(0, 3).map((item) => (
           <div class="group">
             <div class="w-full aspect-square">
-              <Image
-                src={item.image}
-                format="avif"
+              <img
+                src={typeof item.image === "string" ? item.image : (item.image as any).src}
                 width={580}
                 height={580}
                 alt="Team"

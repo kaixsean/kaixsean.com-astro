@@ -17,7 +17,7 @@ COPY . .
 
 EXPOSE 4321
 
-CMD ["pnpm", "dev", "--host", "0.0.0.0"]
+CMD ["sh", "-c", "rm -f .astro/dev.json && pnpm dev --host 0.0.0.0"]
 
 
 # ---- Build Stage ----

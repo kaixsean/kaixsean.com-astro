@@ -1,18 +1,22 @@
 ---
-import { Image, Picture } from "astro:assets";
+import { Image } from "astro:assets";
 import Authorcard from "@/components/authorcard.astro";
 import Container from "@/components/container.astro";
 import Label from "@/components/ui/label.astro";
+import YouTube from "@/components/mdx/YouTube.astro";
 import { authors } from "@/data/authors";
 import { categories } from "@/data/category";
 import Layout from "@/layouts/Layout.astro";
 import { getFormattedDate } from "@/utils/all";
-import { CollectionEntry, getCollection, render } from "astro:content";
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 import type { Author } from "@/data/authors";
 import type { Category } from "@/data/category";
 
-type Props = CollectionEntry<"blog">;
+type Props = {
+  post: CollectionEntry<"blog">;
+};
 
 export async function getStaticPaths() {
   const blog = await getCollection("blog");
@@ -31,6 +35,7 @@ const author = authors.find((item) => item.slug === post.data.author) as Author;
 const category = categories.find(
   (item) => item.slug === post.data.category
 ) as Category;
+const isExternalAuthorImage = typeof author?.image === "string";
 
 ---
 
@@ -54,8 +59,8 @@ const category = categories.find(
           <div class="relative flex-shrink-0">
             {
               author.image && (
-                <Image
-                  src={author.image}
+                <img
+                  src={typeof author.image === "string" ? author.image : (author.image as any).src}
                   alt="Author Photo"
                   width={80}
                   height={80}
@@ -73,7 +78,7 @@ const category = categories.find(
             <div class="flex items-center space-x-2 text-sm">
               <time
                 class="text-gray-500 dark:text-gray-400"
-                datetime={post.data.publishDate}>
+                datetime={post.data.publishDate.toISOString()}>
                 {getFormattedDate(post.data.publishDate)}
               </time>
               <!-- <span>
@@ -91,15 +96,13 @@ const category = categories.find(
     class="relative z-0 max-w-screen-lg mx-auto overflow-hidden lg:rounded-lg aspect-video">
     {
       post.data.image && (
-        <Picture
+        <img
           src={post.data.image}
-          widths={[200, 400, 800]}
-          sizes="(max-width: 640px) 90vw, 480px"
           width={1024}
-          heignt={576}
+          height={576}
           alt="Thumbnail"
           loading="eager"
-          class="w-full"
+          class="w-full object-cover"
         />
       )
     }
@@ -109,7 +112,7 @@ const category = categories.find(
     <article class="max-w-screen-md mx-auto">
       <div
         class="mx-auto my-3 prose prose-base dark:prose-invert prose-a:text-blue-600">
-        <Content />
+        <Content components={{ YouTube }} />
 
         <div class="flex flex-wrap items-center w-full gap-3 md:w-auto">
           {

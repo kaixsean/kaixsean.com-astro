@@ -1,7 +1,7 @@
 ---
 import cx from "classnames";
 
-import { Image, Picture } from "astro:assets";
+import { Image } from "astro:assets";
 import Label from "@/components/ui/label.astro";
 import type { Author } from "@/data/authors";
 import { authors } from "@/data/authors";
@@ -15,6 +15,7 @@ const author = authors.find((item) => item.slug === post.data.author) as Author;
 const category = categories.find(
   (item) => item.slug === post.data.category
 ) as Category;
+const isExternalAuthorImage = typeof author?.image === "string";
 ---
 
 <div class="cursor-pointer group">
@@ -26,13 +27,11 @@ const category = categories.find(
     <a href={"/blog/" + post.id}>
       {
         post.data.image ? (
-          <Picture
+          <img
             src={post.data.image}
-            widths={[200, 400, 800]}
-            sizes="(max-width: 640px) 90vw, 480px"
             alt="Thumbnail"
             loading={preloadImage ? "eager" : "lazy"}
-            class="w-full h-full rounded-md"
+            class="w-full h-full rounded-md object-cover"
           />
         ) : (
           <span class="absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -74,9 +73,9 @@ const category = categories.find(
     <div class="flex items-center gap-3">
       <div class="relative flex-shrink-0 w-5 h-5">
         {
-          author.image && (
-            <Image
-              src={author.image}
+          author?.image && (
+            <img
+              src={typeof author.image === "string" ? author.image : (author.image as any).src}
               alt="Author Photo"
               width={40}
               height={40}
@@ -89,7 +88,7 @@ const category = categories.find(
       <span class="text-sm">{author.name}</span>
     </div>
     <span class="text-xs text-gray-300 dark:text-gray-600"> &bull;</span>
-    <time class="text-sm" datetime={post.data.publishDate}>
+    <time class="text-sm" datetime={post.data.publishDate.toISOString()}>
       {getFormattedDate(post.data.publishDate)}
     </time>
   </div>
