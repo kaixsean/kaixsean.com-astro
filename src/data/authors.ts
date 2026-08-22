@@ -14,10 +14,10 @@ export type Author = Props;
 
 export const authors: Props[] = [
   {
-    name: "Kaixsean",
+    name: "Kaix",
     slug: "kaixsean",
     image: "https://img.kaixsean.com/profile.jpg",
-    bio: "Kaixsean 是一位軟體工程師，喜歡旅遊、攝影與閱讀，也持續在個人部落格記錄生活與學習。",
+    bio: "Kaix 是一位軟體工程師，喜歡旅遊、攝影與閱讀，也持續在個人部落格記錄生活與學習。",
   },
   {
     name: "Mario Sanchez",
