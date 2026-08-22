@@ -1,5 +1,6 @@
 ---
 const { align = "center" } = Astro.props;
+const hasDescription = Astro.slots.has("desc");
 ---
 
 <div class:list={[align === "center" && "text-center"]}>
@@ -7,7 +8,9 @@ const { align = "center" } = Astro.props;
     class="text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
     <slot name="title">Title</slot>
   </h1>
-  <p class="text-lg mt-3 text-gray-600 dark:text-gray-400">
-    <slot name="desc">Some description goes here</slot>
-  </p>
+  {hasDescription && (
+    <p class="text-lg mt-3 text-gray-600 dark:text-gray-400">
+      <slot name="desc" />
+    </p>
+  )}
 </div>

@@ -1,0 +1,44 @@
+---
+import Container from "@/components/container.astro";
+import Pagetitle from "@/components/pagetitle.astro";
+import Pagination from "@/components/pagination.astro";
+import Postlist from "@/components/postlist.astro";
+import Layout from "@/layouts/Layout.astro";
+import { latestPosts } from "@/utils/content";
+
+const postsPerPage = 9;
+
+export function getStaticPaths() {
+  const totalPages = Math.ceil(latestPosts.length / 9);
+
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
+    const currentPage = index + 2;
+    const start = (currentPage - 1) * 9;
+
+    return {
+      params: { page: currentPage.toString() },
+      props: {
+        currentPage,
+        totalPages,
+        posts: latestPosts.slice(start, start + 9),
+      },
+    };
+  });
+}
+
+const { currentPage, totalPages, posts } = Astro.props;
+---
+
+<Layout title="All Posts">
+  <Container>
+    <Pagetitle>
+      <Fragment slot="title">All Posts</Fragment>
+    </Pagetitle>
+    <main>
+      <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+        {posts.map((post) => <Postlist post={post} aspect="square" />)}
+      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/blog" />
+    </main>
+  </Container>
+</Layout>

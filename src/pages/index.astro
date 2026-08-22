@@ -3,13 +3,9 @@ import Container from "@/components/container.astro";
 import Postlist from "@/components/postlist.astro";
 import Layout from "@/layouts/Layout.astro";
 import { latestPosts } from "@/utils/content";
-// Use Astro.glob() to fetch all posts, and then sort them by date.
-// const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
-//   (a, b) =>
-//     new Date(b.frontmatter.publishDate).valueOf() -
-//     new Date(a.frontmatter.publishDate).valueOf()
-// );
-// console.log(posts[0].frontmatter.image);
+
+const maxDisplayPosts = 14;
+const displayPosts = latestPosts.slice(0, maxDisplayPosts);
 ---
 
 <Layout title="">
@@ -17,7 +13,7 @@ import { latestPosts } from "@/utils/content";
     <main>
       <div class="grid gap-10 lg:gap-10 md:grid-cols-2">
         {
-          latestPosts
+          displayPosts
             .slice(0, 2)
             .map((post) => (
               <Postlist post={post} aspect="landscape" preloadImage={true} />
@@ -26,11 +22,21 @@ import { latestPosts } from "@/utils/content";
       </div>
       <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
         {
-          latestPosts
+          displayPosts
             .slice(2)
             .map((post) => <Postlist post={post} aspect="square" />)
         }
       </div>
+      {latestPosts.length > maxDisplayPosts && (
+        <div class="flex justify-center mt-10">
+          <a
+            href="/blog"
+            aria-label="All posts"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300">
+            All Posts
+          </a>
+        </div>
+      )}
     </main>
   </Container>
 </Layout>

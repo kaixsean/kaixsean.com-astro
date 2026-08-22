@@ -1,0 +1,26 @@
+---
+import Container from "@/components/container.astro";
+import Pagetitle from "@/components/pagetitle.astro";
+import Pagination from "@/components/pagination.astro";
+import Postlist from "@/components/postlist.astro";
+import Layout from "@/layouts/Layout.astro";
+import { latestPosts } from "@/utils/content";
+
+const postsPerPage = 9;
+const totalPages = Math.ceil(latestPosts.length / postsPerPage);
+const posts = latestPosts.slice(0, postsPerPage);
+---
+
+<Layout title="All Posts">
+  <Container>
+    <Pagetitle>
+      <Fragment slot="title">All Posts</Fragment>
+    </Pagetitle>
+    <main>
+      <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+        {posts.map((post) => <Postlist post={post} aspect="square" />)}
+      </div>
+      {totalPages > 1 && <Pagination currentPage={1} totalPages={totalPages} basePath="/blog" />}
+    </main>
+  </Container>
+</Layout>

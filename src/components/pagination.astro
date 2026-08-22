@@ -1,0 +1,49 @@
+---
+const { currentPage, totalPages, basePath } = Astro.props;
+const previousPage = currentPage > 1;
+const nextPage = currentPage < totalPages;
+const previousHref = currentPage === 2 ? basePath : `${basePath}/page/${currentPage - 1}`;
+const nextHref = `${basePath}/page/${currentPage + 1}`;
+---
+
+<nav class="flex justify-center pt-6 pb-8" aria-label="Pagination">
+  <div class="inline-flex items-stretch rounded-md shadow-sm">
+  {
+    previousPage ? (
+      <a
+        href={previousHref}
+        rel="prev"
+        class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300">
+        Previous
+      </a>
+    ) : (
+      <button
+        type="button"
+        class="px-5 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 rounded-l-md cursor-auto dark:border-gray-600 dark:bg-gray-800 dark:text-gray-600"
+        disabled>
+        Previous
+      </button>
+    )
+  }
+  <span class="px-5 py-2 text-sm font-medium text-gray-700 bg-gray-100 border-t border-b border-gray-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300">
+    {currentPage} of {totalPages}
+  </span>
+  {
+    nextPage ? (
+      <a
+        href={nextHref}
+        rel="next"
+        class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300">
+        Next
+      </a>
+    ) : (
+      <button
+        type="button"
+        class="px-5 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 rounded-r-md cursor-auto dark:border-gray-600 dark:bg-gray-800 dark:text-gray-600"
+        disabled>
+        Next
+      </button>
+    )
+  }
+  </div>
+</nav>
