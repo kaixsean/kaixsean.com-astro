@@ -7,7 +7,7 @@ import { authors } from "@/data/authors";
 import { categories } from "@/data/category";
 import Layout from "@/layouts/Layout.astro";
 import { getFormattedDate } from "@/utils/all";
-import { CollectionEntry, getCollection } from "astro:content";
+import { CollectionEntry, getCollection, render } from "astro:content";
 
 import type { Author } from "@/data/authors";
 import type { Category } from "@/data/category";
@@ -18,14 +18,14 @@ export async function getStaticPaths() {
   const blog = await getCollection("blog");
 
   return blog.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
 
-const { Content, remarkPluginFrontmatter } = await post.render();
+const { Content, remarkPluginFrontmatter } = await render(post);
 
 const author = authors.find((item) => item.slug === post.data.author) as Author;
 const category = categories.find(

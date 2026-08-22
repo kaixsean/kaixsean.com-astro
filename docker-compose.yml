@@ -1,0 +1,17 @@
+services:
+  blog:
+    build:
+      context: .
+      target: dev
+    container_name: kaixsean-blog-dev
+    ports:
+      - "4321:4321"
+    volumes:
+      # Mount source for hot-reload during development
+      - .:/app
+      # Prevent host node_modules from overriding container's
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
