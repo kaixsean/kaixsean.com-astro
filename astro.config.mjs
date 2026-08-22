@@ -7,7 +7,7 @@ import icon from "astro-icon";
 import { remarkReadingTime } from "./src/utils/all";
 
 export default defineConfig({
-  site: "https://stablo-astro.web3templates.com",
+  site: "https://kaixsean.com",
   markdown: {
     remarkPlugins: [remarkReadingTime],
   },

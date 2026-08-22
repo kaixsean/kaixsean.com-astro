@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import Container from "@/components/container.astro";
 import Giscus from "@/components/giscus.astro";
 import Label from "@/components/ui/label.astro";
@@ -9,14 +8,9 @@ import { categories } from "@/data/category";
 import Layout from "@/layouts/Layout.astro";
 import { getFormattedDate } from "@/utils/all";
 import { getCollection, render } from "astro:content";
-import type { CollectionEntry } from "astro:content";
 
 import type { Author } from "@/data/authors";
 import type { Category } from "@/data/category";
-
-type Props = {
-  post: CollectionEntry<"blog">;
-};
 
 export async function getStaticPaths() {
   const blog = await getCollection("blog");
@@ -29,14 +23,12 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 
-const { Content, remarkPluginFrontmatter } = await render(post);
+const { Content } = await render(post);
 
 const author = authors.find((item) => item.slug === post.data.author) as Author;
 const category = categories.find(
   (item) => item.slug === post.data.category
 ) as Category;
-const isExternalAuthorImage = typeof author?.image === "string";
-
 ---
 
 <Layout
@@ -127,7 +119,7 @@ const isExternalAuthorImage = typeof author?.image === "string";
 
       <div class="flex justify-center mt-7 mb-7">
         <a
-          href="/"
+          href="/blog"
           class="px-5 py-3 text-sm text-blue-600 transition rounded-md dark:bg-gray-700 dark:text-white bg-blue-50 hover:bg-blue-100">
           ← View all posts
         </a>
