@@ -1,55 +1,125 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
-import { Image, getImage } from "astro:assets";
-import { authors } from "@/data/authors";
-import Pagetitle from "@/components/pagetitle.astro";
 import Link from "@/components/ui/link.astro";
+import { authors } from "@/data/authors";
+import Layout from "@/layouts/Layout.astro";
 
-
+const author = authors.find((item) => item.slug === "kaixsean");
+const socialLinks = [
+  {
+    label: "Email",
+    href: "mailto:me@kaixsean.com",
+    viewBox: "0 0 20 20",
+    path: "M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884zM18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z",
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/kaixsean",
+    viewBox: "0 0 24 24",
+    path: "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/kaixiangchen/",
+    viewBox: "0 0 24 24",
+    path: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V8.999h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.602 0 4.267 2.37 4.267 5.455v6.287zM5.337 7.433a2.062 2.062 0 110-4.124 2.062 2.062 0 010 4.124zM7.119 20.452H3.555V8.999h3.564v11.453zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.454C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z",
+  },
+  {
+    label: "X",
+    href: "https://x.com/kaixsean",
+    viewBox: "0 0 24 24",
+    path: "M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z",
+  },
+];
 ---
 
 <Layout title="About">
   <Container>
-    <Pagetitle>
-      <Fragment slot="title">About</Fragment>
-      <Fragment slot="desc">We are a small passionate team.</Fragment>
-    </Pagetitle>
-
-    <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-4xl mt-12">
-      {
-        authors.slice(0, 3).map((item) => (
-          <div class="group">
-            <div class="w-full aspect-square">
-              <img
-                src={typeof item.image === "string" ? item.image : (item.image as any).src}
-                width={580}
-                height={580}
-                alt="Team"
-                class="w-full h-full object-cover rounded transition  group-hover:-translate-y-1 group-hover:shadow-xl"
-              />
-            </div>
-
-            <div class="mt-4 text-center">
-              <h3 class="text-sm text-gray-500 dark:text-gray-300">
-                {" "}
-                {item.name}
-              </h3>
-            </div>
-          </div>
-        ))
-      }
+    <div class="border-b border-gray-200 pt-6 pb-8 dark:border-gray-700">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">
+        About
+      </h1>
     </div>
 
-    <div class="mx-auto max-w-xl text-center mt-14">
-      <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-400">
-        We're a multi-cultural team from around the world! We come from diverse
-        backgrounds, bringing different personalities, experiences and skills to
-        the job. This is what makes our team so special.
-      </p>
-      <div class="mt-8">
-        <Link href="/contact" style="primary">Get in touch</Link>
-      </div>
+    <div class="grid items-start gap-10 pt-8 xl:grid-cols-3 xl:gap-x-12">
+      <aside class="flex flex-col items-center text-center">
+        {
+          author && (
+            <>
+              <img
+                src={typeof author.image === "string" ? author.image : author.image.src}
+                alt={`${author.name} avatar`}
+                width="192"
+                height="192"
+                loading="eager"
+                class="h-48 w-48 rounded-full object-cover"
+              />
+              <h2 class="pt-4 pb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {author.name}
+              </h2>
+              <p class="text-gray-500 dark:text-gray-400">Software Engineer</p>
+            </>
+          )
+        }
+        <div class="flex justify-center gap-3 pt-6">
+          {
+            socialLinks.map((link) => (
+              <a
+                href={link.href}
+                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                aria-label={link.label}
+                title={link.label}
+                class="text-gray-500 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox={link.viewBox} fill="currentColor">
+                  <title>{link.label}</title>
+                  <path d={link.path} />
+                </svg>
+              </a>
+            ))
+          }
+        </div>
+      </aside>
+
+      <article class="prose prose-base max-w-none text-gray-600 dark:prose-invert dark:text-gray-400 xl:col-span-2">
+        <p>彰化人，北漂台北當軟體工程師。雖然寫了近十年的程式，但程度也是爾爾。</p>
+        <p>喜歡科技，也熱愛人文藝術，總被認為是文青一枚，但自己卻不這麼認為。</p>
+        <p>畢生熱衷於「做喜歡的事，讓喜歡的事有價值。」夢想是能活出生活的品味，活出自己喜歡的樣子。</p>
+        <p>MBTI 是 INFP，這個世界太快太急，得有個部落格，才能讓我能好好喘口氣，面對內心的無數聲音。</p>
+        <p>雖然是原住民，但不會唱歌，也不愛跳舞，興趣是游泳、閱讀、繪畫、寫作、旅行，安靜又有那麼點孤僻。</p>
+
+        <h2>最喜歡的地方</h2>
+        <ul>
+          <li>福岡</li>
+          <li>清邁</li>
+          <li>京都</li>
+          <li>帛琉</li>
+        </ul>
+
+        <h2>喜歡的影視作品</h2>
+        <ul>
+          <li>鋼之鍊金術師</li>
+          <li>海邊的曼徹斯特</li>
+          <li>星際效應</li>
+          <li>黑暗騎士</li>
+        </ul>
+
+        <h2>喜歡的樂團</h2>
+        <ul>
+          <li>Coldplay</li>
+        </ul>
+
+        <p>
+          工作方面的資訊，請查閱
+          <Link
+            href="https://portfolio.kaixsean.com"
+            size="md"
+            style="muted"
+            class="inline-block ml-1 text-sm">
+            Kaixiang's Portfolio
+          </Link>。
+        </p>
+      </article>
     </div>
   </Container>
 </Layout>
