@@ -1,0 +1,37 @@
+---
+import Container from "@/components/container.astro";
+import Layout from "@/layouts/Layout.astro";
+import Pagetitle from "@/components/pagetitle.astro";
+import { categories } from "@/data/category";
+import { latestPosts } from "@/utils/content";
+
+const categoryCounts = categories.map((category) => ({
+  ...category,
+  count: latestPosts.filter((post) => post.data.category === category.slug).length,
+}));
+---
+
+<Layout title="Category">
+  <Container>
+    <Pagetitle>
+      <Fragment slot="title">Category</Fragment>
+    </Pagetitle>
+    <main class="grid gap-6 mt-10 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        categoryCounts.map((category) => (
+          <a
+            href={`/category/${category.slug}`}
+            class="block p-6 bg-gray-50 rounded-md transition hover:-translate-y-1 hover:shadow-md dark:bg-gray-900">
+            <h2 class="text-xl font-semibold text-brand-primary dark:text-white">
+              {category.title}
+            </h2>
+            <p class="mt-3 text-gray-600 dark:text-gray-400">{category.description}</p>
+            <p class="mt-4 text-sm font-medium text-gray-500 dark:text-gray-500">
+              {category.count} {category.count === 1 ? "post" : "posts"}
+            </p>
+          </a>
+        ))
+      }
+    </main>
+  </Container>
+</Layout>

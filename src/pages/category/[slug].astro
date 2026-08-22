@@ -1,0 +1,30 @@
+---
+import Container from "@/components/container.astro";
+import Layout from "@/layouts/Layout.astro";
+import Pagetitle from "@/components/pagetitle.astro";
+import Postlist from "@/components/postlist.astro";
+import { categories } from "@/data/category";
+import { latestPosts } from "@/utils/content";
+
+export function getStaticPaths() {
+  return categories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const posts = latestPosts.filter((post) => post.data.category === category.slug);
+---
+
+<Layout title={category.title}>
+  <Container>
+    <Pagetitle>
+      <Fragment slot="title">{category.title}</Fragment>
+      <Fragment slot="desc">{category.description}</Fragment>
+    </Pagetitle>
+    <main class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+      {posts.map((post) => <Postlist post={post} aspect="square" />)}
+    </main>
+  </Container>
+</Layout>
