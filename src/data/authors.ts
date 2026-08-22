@@ -1,6 +1,7 @@
 import marioImage from "../assets/authors/mario.webp";
 import joshuaImage from "../assets/authors/joshua.webp";
 import erikaImage from "../assets/authors/erika.webp";
+import avatarImage from "../assets/authors/avatar.png";
 import type { ImageMetadata } from "astro";
 
 export interface Props {
@@ -16,7 +17,7 @@ export const authors: Props[] = [
   {
     name: "Kaix",
     slug: "kaixsean",
-    image: "https://img.kaixsean.com/profile.jpg",
+    image: avatarImage,
     bio: "Kaix 是一位軟體工程師，喜歡旅遊、攝影與閱讀，也持續在個人部落格記錄生活與學習。",
   },
   {
