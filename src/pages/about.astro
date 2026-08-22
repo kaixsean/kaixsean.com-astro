@@ -1,6 +1,7 @@
 ---
 import Container from "@/components/container.astro";
 import Link from "@/components/ui/link.astro";
+import { Image } from "astro:assets";
 import { authors } from "@/data/authors";
 import Layout from "@/layouts/Layout.astro";
 
@@ -46,14 +47,25 @@ const socialLinks = [
         {
           author && (
             <>
-              <img
-                src={typeof author.image === "string" ? author.image : author.image.src}
-                alt={`${author.name} avatar`}
-                width="192"
-                height="192"
-                loading="eager"
-                class="h-48 w-48 rounded-full object-cover"
-              />
+              {typeof author.image === "string" ? (
+                <img
+                  src={author.image}
+                  alt={`${author.name} avatar`}
+                  width="192"
+                  height="192"
+                  loading="eager"
+                  class="h-48 w-48 rounded-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={author.image}
+                  alt={`${author.name} avatar`}
+                  width={192}
+                  height={192}
+                  loading="eager"
+                  class="h-48 w-48 rounded-full object-cover"
+                />
+              )}
               <h2 class="pt-4 pb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {author.name}
               </h2>
