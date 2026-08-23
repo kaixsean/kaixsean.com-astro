@@ -1,0 +1,133 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+
+const skillGroups = [
+  {
+    skills: [
+      ["PHP", "php.svg"],
+      ["Python", "python.svg"],
+      ["MySQL", "mysql-logo.svg"],
+      ["MongoDB", "mongodb.svg"],
+      ["Linux", "linux.svg"],
+      ["Laravel", "laravel.svg"],
+      ["CodeIgniter", "codeigniter.svg"],
+      ["MariaDB", "mariadb.svg"],
+    ],
+  },
+  {
+    skills: [
+      ["JavaScript", "js.svg"],
+      ["Tailwind CSS", "tailwindcss.svg"],
+      ["Bootstrap", "bootstrap.svg"],
+      ["jQuery", "jquery.svg"],
+      ["HTML", "html-5.svg"],
+      ["CSS", "css-3.svg"],
+      ["Vue", "vue.svg"],
+    ],
+  },
+  {
+    skills: [
+      ["Flutter", "flutter.svg"],
+      ["Google Cloud Platform", "google-cloud.svg"],
+      ["AWS", "aws-logo.svg"],
+      ["Git Source Control", "git.svg"],
+    ],
+  },
+];
+
+const projects = [
+  ["UC UniK Official Website", "ucunik.png", "https://www.ucunik.com/"],
+  [
+    "WhaleFinder (Control Panel)",
+    "whalefinder.png",
+    "https://play.google.com/store/apps/details?id=com.whale.WhaleFinder.app&hl=zh_TW",
+  ],
+  ["My Blog", "myblog.png", "https://www.kaixsean.com"],
+];
+---
+
+<Layout title="Portfolio" desc="Kaixiang Chen 的工作經歷、技能與專案作品集。">
+  <main class="-mb-10 bg-sky-100 pb-10 dark:bg-sky-950">
+    <section class="border-b-2 border-sky-300 shadow-lg dark:border-sky-800">
+      <Container>
+        <div class="flex min-h-[34rem] flex-col items-center justify-center gap-10 py-20 md:flex-row md:justify-between">
+          <div>
+            <p class="text-2xl text-gray-700 dark:text-gray-300">I'M</p>
+            <h1 class="mt-2 text-4xl font-bold leading-tight text-orange-700 dark:text-amber-300 sm:text-5xl">Kaixiang Chen</h1>
+            <p class="mt-6 text-lg text-gray-700 dark:text-gray-200 sm:text-2xl">Software Engineer and Web Developer</p>
+          </div>
+          <img class="h-56 w-56 rounded-full border-8 border-sky-200 object-cover shadow-xl dark:border-sky-800 sm:h-72 sm:w-72" src="/portfolio/avatar.png" alt="Kaixiang Chen" width="288" height="288" loading="eager" />
+        </div>
+      </Container>
+    </section>
+
+    <section id="about" class="scroll-mt-24 py-16">
+      <Container>
+        <h2 class="text-3xl font-semibold text-gray-900 dark:text-white sm:text-4xl">About</h2>
+        <div class="mt-5 flex gap-5">
+          <div class="w-1/4 border-t-2 border-orange-600 dark:border-amber-300"></div>
+          <p class="max-w-3xl text-lg leading-relaxed text-gray-700 dark:text-gray-300">I am a full-stack engineer specializing in PHP and JavaScript, with experience in Python and Flutter development. I am passionate about making digital services easier and more enjoyable for people to use.</p>
+        </div>
+      </Container>
+    </section>
+
+    <section id="skills" class="scroll-mt-24 bg-sky-200/60 py-16 dark:bg-sky-900/40">
+      <Container>
+        <h2 class="text-center text-3xl font-semibold text-gray-900 dark:text-white sm:text-4xl">Skills</h2>
+        <div class="mt-8 space-y-5">
+          {skillGroups.map((group) => (
+            <ul class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+              {group.skills.map(([name, icon]) => (
+                <li class="flex min-h-36 flex-col items-center justify-center gap-4 rounded-lg bg-sky-700 px-3 py-8 text-center text-white shadow-sm transition hover:bg-orange-700 dark:bg-sky-700 dark:hover:bg-amber-500 dark:hover:text-gray-950">
+                  <img src={`/portfolio/skills/${icon}`} alt={name} width="48" height="48" loading="lazy" />
+                  <span>{name}</span>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section id="projects" class="scroll-mt-24 py-16">
+      <Container>
+        <h2 class="text-center text-3xl font-semibold text-gray-900 dark:text-white sm:text-4xl">Projects</h2>
+        <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map(([title, image, href]) => (
+            <a href={href} target="_blank" rel="noopener noreferrer" class="group overflow-hidden rounded-lg bg-sky-700 text-white shadow-sm transition hover:bg-orange-700 dark:bg-sky-800 dark:hover:bg-amber-500 dark:hover:text-gray-950">
+              <img class="aspect-square w-full object-cover transition duration-300 group-hover:scale-105" src={`/portfolio/projects/${image}`} alt={title} width="500" height="500" loading="lazy" />
+              <h3 class="px-4 py-4 text-center">{title}</h3>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section id="contact" class="relative scroll-mt-24 overflow-hidden bg-sky-100 pb-0 pt-5 text-gray-900 dark:bg-sky-950 dark:text-white">
+      <div class="pointer-events-none grid grid-cols-3">
+        <div class="h-48 border-y border-sky-400 bg-sky-300/70 dark:border-sky-800 dark:bg-sky-900"></div>
+        <div class="h-48 border-y border-sky-400 bg-sky-300/70 dark:border-sky-800 dark:bg-sky-900"></div>
+        <div class="h-48 border-y border-sky-400 bg-sky-300/70 dark:border-sky-800 dark:bg-sky-900"></div>
+      </div>
+      <Container class="bg-sky-100 dark:bg-sky-950">
+        <div class="absolute inset-x-0 top-5 flex flex-col items-center">
+          <h2 class="relative -top-6 text-center text-3xl font-semibold sm:text-4xl">Contact Me</h2>
+          <div class="mt-10">
+            <a href="mailto:me@kaixsean.com" class="flex items-center rounded-sm border border-sky-500 bg-white px-5 py-3 transition hover:border-sky-700 dark:border-sky-700 dark:bg-gray-900 dark:hover:border-sky-500">
+              <span class="text-base text-gray-700 dark:text-gray-200 sm:text-lg">me@kaixsean.com</span>
+            </a>
+          </div>
+          <div class="absolute top-44 flex gap-4">
+            <a href="https://github.com/kaixsean" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="transition hover:opacity-75">
+              <img class="h-8 w-8" src="/portfolio/skills/github.svg" alt="" width="32" height="32" />
+            </a>
+            <a href="https://www.linkedin.com/in/kaixiangchen/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="transition hover:opacity-75">
+              <img class="h-8 w-8" src="/portfolio/skills/linkedin.svg" alt="" width="32" height="32" />
+            </a>
+          </div>
+        </div>
+      </Container>
+    </section>
+  </main>
+</Layout>
