@@ -16,6 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 const { title, desc, ogimage = "/opengraph.jpg" } = Astro.props;
 
 const resolvedOGImage = checkImageUrl(ogimage, Astro.site);
+const googleAnalyticsId = "G-BSQNFNY4X2";
 
 const makeTitle = title
   ? title + " | " + "Kaixsean"
@@ -66,6 +67,16 @@ const makeTitle = title
         },
       }}
     />
+
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+    <script is:inline define:vars={{ googleAnalyticsId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", googleAnalyticsId);
+    </script>
   </head>
   <body class="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
     <Navbar />
