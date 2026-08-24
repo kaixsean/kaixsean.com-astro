@@ -24,7 +24,7 @@ const category = categories.find(
         post.data.image ? (
           <img
             src={post.data.image}
-            alt="Thumbnail"
+            alt={post.data.title}
             loading={preloadImage ? "eager" : "lazy"}
             class="w-full h-full rounded-md object-cover"
           />
