@@ -30,12 +30,48 @@ const author = authors.find((item) => item.slug === post.data.author) as Author;
 const category = categories.find(
   (item) => item.slug === post.data.category
 ) as Category;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.data.title,
+  description: post.data.excerpt || "",
+  image: post.data.image || "/facebook-logo.png",
+  author: {
+    "@type": "Person",
+    name: author.name,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Kaixsean",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://kaixsean.com/facebook-logo.png",
+    },
+  },
+  datePublished: post.data.publishDate.toISOString(),
+  dateModified: post.data.publishDate.toISOString(),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://kaixsean.com/blog/${post.id}`,
+  },
+  keywords: post.data.tags.join(", "),
+};
 ---
 
 <Layout
   title={post.data.title}
   desc={post.data.excerpt}
-  ogimage={post.data.image}>
+  ogimage={post.data.image || "/facebook-logo.png"}
+  pageType="article"
+  article={{
+    publishedTime: post.data.publishDate.toISOString(),
+    modifiedTime: post.data.publishDate.toISOString(),
+    authors: [author.name],
+    section: category.title,
+    tags: post.data.tags,
+  }}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
   <Container>
     <div class="max-w-screen-md mx-auto">
       <div class="text-center">
