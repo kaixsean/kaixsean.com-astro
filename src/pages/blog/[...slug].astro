@@ -31,6 +31,8 @@ const category = categories.find(
   (item) => item.slug === post.data.category
 ) as Category;
 
+const siteUrl = Astro.site ?? new URL("https://www.kaixsean.com/");
+
 const articleJsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -46,14 +48,14 @@ const articleJsonLd = {
     name: "Kaixsean",
     logo: {
       "@type": "ImageObject",
-      url: "https://kaixsean.com/facebook-logo.png",
+      url: new URL("/facebook-logo.png", siteUrl).href,
     },
   },
   datePublished: post.data.publishDate.toISOString(),
   dateModified: post.data.publishDate.toISOString(),
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": `https://kaixsean.com/blog/${post.id}`,
+    "@id": new URL(`/blog/${post.id}/`, siteUrl).href,
   },
   keywords: post.data.tags.join(", "),
 };
